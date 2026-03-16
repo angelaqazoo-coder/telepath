@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
   
-  <link rel="stylesheet" href="telepath.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -33,13 +33,48 @@
     <section id="panel-video">
       <div class="panel-header">
         <span class="panel-label">📹 Live Feed</span>
+        <div class="multimodal-indicators">
+          <div class="indicator active" data-type="video">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <circle cx="8" cy="10" r="2"/>
+              <path d="M14 10l4 4m0-4l-4 4"/>
+            </svg>
+            Video
+          </div>
+          <div class="indicator active" data-type="audio">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 7v10M7 9v6M2 12h20"/>
+            </svg>
+            Audio
+          </div>
+          <div class="indicator active" data-type="speech">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+            </svg>
+            Speech
+          </div>
+        </div>
       </div>
       <div id="video-container">
         <video id="webcam" autoplay playsinline muted></video>
         <canvas id="frame-canvas" class="hidden"></canvas>
         <div id="video-overlay">
-          <div class="recording-dot"></div>
-          <span class="recording-text">Streaming to Gemini</span>
+          <div class="recording-indicator">
+            <div class="recording-dot"></div>
+            <span class="recording-text">Streaming to Gemini</span>
+          </div>
+          <div class="participant-counter">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <span id="participant-count">0</span> participants
+          </div>
         </div>
       </div>
       <div id="participant-list">
@@ -51,54 +86,162 @@
     <section id="panel-insights">
       <div class="panel-header">
         <span class="panel-label">📊 Meeting Insights</span>
-      </section>
+        <div class="ai-status">
+          <div class="ai-brain-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5c0 .74-.33 1.4-.85 1.85L12 6.5V8h1.5A2.5 2.5 0 0 1 16 10.5c0 .74-.33 1.4-.85 1.85L15 12.5V14h1.5a2.5 2.5 0 0 1 2.5 2.5c0 .74-.33 1.4-.85 1.85L18 18.5V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1.5l-.15-.15A2.5 2.5 0 0 1 3 16.5 2.5 2.5 0 0 1 5.5 14H7v-1.5l-.15-.15A2.5 2.5 0 0 1 4.5 10.5 2.5 2.5 0 0 1 7 8h1.5V6.5l.15-.15A2.5 2.5 0 0 1 9.5 2z"/>
+            </svg>
+          </div>
+          <span class="ai-status-text">AI Active</span>
+        </div>
+      </div>
 
       <div id="dashboard-body">
-        <!-- Metric Cards -->
-        <div class="metrics-grid">
-          <div class="metric-card" id="metric-understanding">
+        <!-- Key Metrics -->
+        <div class="metrics-showcase">
+          <div class="metric-card primary" id="metric-understanding">
             <div class="metric-header">
-              <span class="metric-icon">🧠</span>
-              <span class="metric-title">Understanding</span>
+              <div class="metric-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5c0 .74-.33 1.4-.85 1.85L12 6.5V8h1.5A2.5 2.5 0 0 1 16 10.5c0 .74-.33 1.4-.85 1.85L15 12.5V14h1.5a2.5 2.5 0 0 1 2.5 2.5c0 .74-.33 1.4-.85 1.85L18 18.5V20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-1.5l-.15-.15A2.5 2.5 0 0 1 3 16.5 2.5 2.5 0 0 1 5.5 14H7v-1.5l-.15-.15A2.5 2.5 0 0 1 4.5 10.5 2.5 2.5 0 0 1 7 8h1.5V6.5l.15-.15A2.5 2.5 0 0 1 9.5 2z"/>
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-title">Understanding</span>
+                <div class="metric-value">62%</div>
+              </div>
             </div>
-            <div class="metric-value">62%</div>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar-fill" style="width: 62%;"></div>
+            <div class="metric-visualization">
+              <div class="circular-progress" data-value="62">
+                <svg width="60" height="60" viewBox="0 0 60 60">
+                  <circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
+                  <circle cx="30" cy="30" r="25" fill="none" stroke="#3b82f6" stroke-width="4" stroke-dasharray="157" stroke-dashoffset="60" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+                </svg>
+              </div>
+            </div>
+            <div class="metric-trend negative">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+                <polyline points="17 18 23 18 23 12"/>
+              </svg>
+              <span>-5% from last 10min</span>
             </div>
           </div>
 
-          <div class="metric-card" id="metric-engagement">
+          <div class="metric-card secondary" id="metric-engagement">
             <div class="metric-header">
-              <span class="metric-icon">🔥</span>
-              <span class="metric-title">Engagement</span>
+              <div class="metric-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-title">Engagement</span>
+                <div class="metric-value">85%</div>
+              </div>
             </div>
-            <div class="metric-value">85%</div>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar-fill" style="width: 85%;"></div>
+            <div class="metric-visualization">
+              <div class="circular-progress" data-value="85">
+                <svg width="60" height="60" viewBox="0 0 60 60">
+                  <circle cx="30" cy="30" r="25" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
+                  <circle cx="30" cy="30" r="25" fill="none" stroke="#f97316" stroke-width="4" stroke-dasharray="157" stroke-dashoffset="24" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+                </svg>
+              </div>
+            </div>
+            <div class="metric-trend positive">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                <polyline points="17 6 23 6 23 12"/>
+              </svg>
+              <span>+12% from last 10min</span>
             </div>
           </div>
         </div>
 
-        <!-- Social Dynamics / Alerts -->
+        <!-- Real-time Alerts -->
         <div id="alerts-section">
-          <div class="section-label">Real-time Alerts</div>
+          <div class="section-header">
+            <span class="section-label">⚡ Real-time Alerts</span>
+            <div class="alert-badge">2 Active</div>
+          </div>
           <div id="alerts-container">
-            <div class="alert-toast hidden" id="alert-confusion">
-              <span class="alert-icon">❓</span>
-              <span class="alert-text">Confusion spike detected</span>
+            <div class="alert-card warning" id="alert-confusion">
+              <div class="alert-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              </div>
+              <div class="alert-content">
+                <div class="alert-title">Confusion Spike Detected</div>
+                <div class="alert-description">3 participants showing confusion signals</div>
+                <div class="alert-time">Just now</div>
+              </div>
+              <div class="alert-pulse"></div>
+            </div>
+            <div class="alert-card critical">
+              <div class="alert-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              </div>
+              <div class="alert-content">
+                <div class="alert-title">Speaking Interruption</div>
+                <div class="alert-description">Sarah interrupted 3 times</div>
+                <div class="alert-time">2 min ago</div>
+              </div>
+              <div class="alert-pulse"></div>
             </div>
           </div>
         </div>
 
         <!-- AI Observations -->
         <div id="observations-section">
-          <div class="section-label">AI Observations</div>
+          <div class="section-header">
+            <span class="section-label">🧠 AI Observations</span>
+            <div class="observation-count">4 insights</div>
+          </div>
           <div id="observations-list">
-            <div class="observation-item">
-              “Three participants appear confused about the budget discussion.”
-            </div>
             <div class="observation-item important">
-              “Sarah has tried to speak three times but was interrupted.”
+              <div class="observation-avatar">👤</div>
+              <div class="observation-content">
+                <div class="observation-text">"Three participants appear confused about the budget discussion."</div>
+                <div class="observation-tags">
+                  <span class="tag">Budget</span>
+                  <span class="tag">Confusion</span>
+                </div>
+              </div>
+            </div>
+            <div class="observation-item critical">
+              <div class="observation-avatar">👩</div>
+              <div class="observation-content">
+                <div class="observation-text">"Sarah has tried to speak three times but was interrupted."</div>
+                <div class="observation-tags">
+                  <span class="tag">Participation</span>
+                  <span class="tag critical">Critical</span>
+                </div>
+              </div>
+            </div>
+            <div class="observation-item">
+              <div class="observation-avatar">👥</div>
+              <div class="observation-content">
+                <div class="observation-text">"Overall engagement increased after the break."</div>
+                <div class="observation-tags">
+                  <span class="tag">Positive</span>
+                </div>
+              </div>
+            </div>
+            <div class="observation-item">
+              <div class="observation-avatar">🎯</div>
+              <div class="observation-content">
+                <div class="observation-text">"Key decision points are being well-received."</div>
+                <div class="observation-tags">
+                  <span class="tag">Decision</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -107,11 +250,32 @@
   </main>
 
   <footer id="controls-bar">
-    <div id="mic-region">
-      <button id="start-btn">Start Telepath Session</button>
-      <button id="mic-btn" class="hidden">🎤</button>
-      <div id="waveform-display">
-        <span id="wave-idle-label">Waiting for start…</span>
+    <div class="controls-left">
+      <button id="start-btn" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+        Start Telepath Session
+      </button>
+      <button id="mic-btn" class="btn-mic hidden">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+        </svg>
+      </button>
+    </div>
+    <div id="waveform-display">
+      <canvas id="waveform-canvas" width="200" height="40"></canvas>
+      <span id="wave-idle-label">Waiting for start…</span>
+    </div>
+    <div class="controls-right">
+      <div class="voice-alerts-toggle">
+        <label class="toggle-switch">
+          <input type="checkbox" id="voice-alerts" checked>
+          <span class="toggle-slider"></span>
+        </label>
+        <span>Voice Alerts</span>
       </div>
     </div>
   </footer>
@@ -120,3 +284,4 @@
 <script src="telepath.js"></script>
 </body>
 </html>
+
