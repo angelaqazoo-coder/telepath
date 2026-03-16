@@ -30,7 +30,7 @@ SERVER_DIR = pathlib.Path(__file__).parent
 
 # ── Config ────────────────────────────────────────────────────────────────────
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-LIVE_MODEL     = "models/gemini-2.0-flash-exp"
+LIVE_MODEL     = "models/gemini-2.0-flash"
 
 # ── System Prompt ─────────────────────────────────────────────────────────────
 TELEPATH_PROMPT = """You are Telepath, an advanced AI designed to understand the emotional and cognitive state of a meeting.
