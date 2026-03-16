@@ -1,0 +1,18 @@
+# Prototype Demonstration Plan
+
+- [ ] Open `file:///Users/angela/Downloads/Antigravity/index.html`
+- [ ] Resize window to 1400x860
+- [ ] Screenshot 1: Initial state & Confirm 3-panel layout
+- [ ] Interaction 1:
+    - [ ] Click mic button
+    - [ ] Wait for waveform and transcript (2s + 6s)
+    - [ ] Screenshot 2: First AI response with formula
+- [ ] Interaction 2:
+    - [ ] Click mic button
+    - [ ] Wait for turn to complete (~6s)
+    - [ ] Screenshot 3: Conversation bubbles and flowchart
+- [ ] Interaction 3 & 4:
+    - [ ] Click mic button (wait 8s)
+    - [ ] Click mic button (wait 8s)
+    - [ ] Screenshot 4: Full flowchart and callout cards
+- [ ] Report findings (layout, animations, AI response, flowchart, console errors)

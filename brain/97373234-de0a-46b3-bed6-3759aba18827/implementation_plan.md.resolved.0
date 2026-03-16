@@ -1,0 +1,67 @@
+# AI Cognitive Companion — MVP Frontend Prototype
+
+A multimodal AI study companion that lets users upload a problem screenshot, think aloud via voice, and receive real-time AI hints, corrections, and a visual progress flowchart. This plan covers the **frontend-only prototype** (no real backend calls).
+
+## MVP Feature Scope
+
+| Feature | Include? | Rationale |
+|---|---|---|
+| Screenshot upload / paste area | ✅ | Core multimodal input |
+| Voice input button + live waveform | ✅ | Core multimodal input |
+| Live transcript display | ✅ | Shows user's spoken thought |
+| AI response panel (streaming text) | ✅ | Core output |
+| Math / LaTeX rendering | ✅ | Key for STEM problems |
+| Hint / fallacy callout cards | ✅ | Core AI behavior |
+| Progress flowchart (green/red/yellow) | ✅ | Unique differentiator |
+| Real Gemini Live API integration | ❌ | Backend — deferred |
+| Multi-user / auth | ❌ | Out of scope for MVP |
+
+---
+
+## Proposed Changes
+
+### Project Root — Static Web App
+
+#### [NEW] index.html
+Main shell: imports fonts, links to CSS + JS, and defines the 3-panel layout.
+
+**Layout (3 columns):**
+1. **Left panel** — Problem view: drag-and-drop screenshot upload zone + image preview
+2. **Centre panel** — Conversation: user voice transcript bubbles + AI response with streamed text, math rendering (KaTeX), and hint/fallacy callout cards
+3. **Right panel** — Progress flowchart: SVG/Canvas chart with colour-coded nodes
+
+#### [NEW] style.css
+Full design system:
+- Dark-mode base (`#0d0f14` background)
+- Accent palette: `#6C63FF` (purple), `#22D3EE` (cyan), semantic green/red/yellow for flowchart
+- Google Fonts: **Inter** + **JetBrains Mono**
+- Glassmorphism cards, subtle gradients
+- Mic button pulse animation, waveform bars animation, streaming text cursor blink
+- Node hover glow for flowchart
+
+#### [NEW] app.js
+Interactive prototype logic (mocked, no real API):
+- Drag-and-drop / paste image upload with preview
+- Mic button toggles "recording" state + animated waveform
+- Mock voice transcript: cycles through pre-written user utterances on click/spacebar
+- Mock AI response: types out a response character-by-character (simulates streaming)
+- Hint/fallacy card appears after AI response with type badge (💡 Hint / ⚠️ Fallacy / 📖 Theory)
+- Progress flowchart: renders SVG nodes (steps) in green/red/yellow; advances on each transcript turn
+
+---
+
+## Verification Plan
+
+### Manual Browser Verification
+Run these steps yourself after implementation:
+
+1. Open `index.html` directly in Chrome (no server needed — `file://` works)
+2. **Upload panel**: Drag an image or paste from clipboard → image should appear in the preview zone
+3. **Voice simulation**: Click the mic button → waveform animates, button pulses
+4. **Transcript + AI response**: Press `Space` or click "Send" → a user bubble appears, then AI types out a streamed response with math notation rendered
+5. **Hint card**: After AI response, a hint/fallacy callout card appears below
+6. **Flowchart**: A new node is added to the right-panel SVG after each turn; nodes are colour-coded (green = correct, red = error, yellow = missed)
+7. Resize the browser window → layout should remain usable at ≥900px wide
+
+### Browser Recording
+A browser subagent will open the page and record a walkthrough video saved to artifacts.

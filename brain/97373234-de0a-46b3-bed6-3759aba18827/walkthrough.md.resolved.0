@@ -1,0 +1,66 @@
+# Cogito — AI Cognitive Companion · Prototype Walkthrough
+
+**Files built:** [index.html](file:///Users/angela/Downloads/Antigravity/index.html), [style.css](file:///Users/angela/Downloads/Antigravity/style.css), [app.js](file:///Users/angela/Downloads/Antigravity/app.js)  
+**Location:** `/Users/angela/Downloads/Antigravity/`  
+**Open with:** Double-click `index.html` in Finder (no server needed)
+
+---
+
+## What Was Built
+
+A fully interactive, no-backend frontend prototype for the **Cogito** AI cognitive companion.
+
+### 3-Panel Layout
+
+| Panel | Purpose |
+|-------|---------|
+| **Left — Problem** | Drag-and-drop / paste / click-to-browse screenshot upload, topic tags, difficulty indicator, live session stats |
+| **Centre — Think Aloud** | Conversation area with user & AI bubbles, streaming AI text, KaTeX math rendering, hint/fallacy/theory callout cards |
+| **Right — Your Path** | SVG flowchart that builds node-by-node in green (✓ correct), red (✗ error), yellow (△ missed) |
+
+---
+
+## Screenshots
+
+### Initial State
+![Initial state — 3-panel layout loaded, ready for input](/Users/angela/.gemini/antigravity/brain/97373234-de0a-46b3-bed6-3759aba18827/initial_state_1773682013947.png)
+
+### After First Turn
+![First turn — user bubble + AI response with green flowchart node](/Users/angela/.gemini/antigravity/brain/97373234-de0a-46b3-bed6-3759aba18827/first_interaction_complete_1773682049830.png)
+
+### Full Walkthrough (4 turns)
+![Final state — multi-turn conversation, mixed-colour flowchart, Common Error callout](/Users/angela/.gemini/antigravity/brain/97373234-de0a-46b3-bed6-3759aba18827/final_state_full_flowchart_1773682146674.png)
+
+---
+
+## Recorded Demo
+
+![Cogito prototype walkthrough recording](/Users/angela/.gemini/antigravity/brain/97373234-de0a-46b3-bed6-3759aba18827/cogito_prototype_walkthrough_1773681979174.webp)
+
+---
+
+## Verified Features
+
+- ✅ Dark-mode 3-panel layout renders at 1400×860 with no overflow
+- ✅ Image drop zone (drag/drop, paste, click) shows preview with remove button  
+- ✅ Session timer starts on first interaction
+- ✅ Mic button pulses red when "recording", waveform bars animate
+- ✅ Live transcript types across the waveform bar character-by-character
+- ✅ AI response streams into the bubble with a blinking cursor
+- ✅ KaTeX math formulas render inline (LaTeX `$$…$$` delimiters)
+- ✅ Hint (💡 cyan), Fallacy (⚠️ red), Theory (📖 yellow) callout cards appear after AI responses
+- ✅ Flowchart adds a labelled node after each turn (green/red/yellow with icon ✓/✗/△)
+- ✅ Missed step auto-inserts a yellow node mid-session
+- ✅ Stats panel updates: Steps taken, Hints used, Errors caught, Accuracy %
+- ✅ Reset button clears all state and restarts cleanly
+- ✅ Zero browser console errors
+
+---
+
+## Next Steps for Hackathon Backend
+
+1. **Gemini Live API** — replace mock mic loop with real `MediaRecorder` → WebSocket stream to Gemini Live
+2. **Vision input** — send uploaded screenshot as image Part alongside voice stream
+3. **Real-time AI parsing** — parse Gemini's streamed text for LaTeX delimiters and render mid-stream
+4. **Progress tracking** — persist session to Firestore (Google Cloud) for cross-session continuity
+5. **Google Cloud Run** — host the backend WebSocket relay

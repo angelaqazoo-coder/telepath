@@ -1,0 +1,132 @@
+# Cogito — Full Backend + UI Redesign Plan
+
+## What's Changing from the Prototype
+
+The screen is redesigned around **two focal zones**, with no text transcript at all:
+
+| Zone | What it shows |
+|------|---------------|
+| **Problem viewer** (left) | The uploaded screenshot, with AI-drawn annotation overlays for definitions, constraints, and assumptions |
+| **Workspace** (right) | Live rendered equations (what you just said, in LaTeX), with error highlights, hint callouts, and the progress flowchart below |
+
+The AI **never shows your words as text**. Instead it renders them as math. It **speaks back** to you in audio using a warm Gemini voice persona ("Cogito").
+
+---
+
+## Feature List
+
+### 🖼️ Problem Viewer — Left Panel
+- Display uploaded screenshot at full width
+- AI analyses the image and extracts: the problem statement, variables, constraints, and known/unknown values
+- **Annotation overlays** draw directly on the image:
+  - Blue box = definition / given info
+  - Orange box = constraint or assumption the AI wants to call your attention to
+  - Purple arrow = step currently being discussed
+- Annotations appear/fade as the conversation progresses
+- You can tap any region of the image to ask "what does this mean?"
+
+### ✏️ Workspace — Right Panel
+- **Current Working Step** (top): AI renders your latest spoken math as a full LaTeX block — e.g. you say "x squared plus two x" and it renders `x² + 2x` with colour-coded status:
+  - 🟢 Green border = what you said is correct
+  - 🔴 Red border + strikethrough = where you made an error; the correct version shown below with a diff highlight
+  - 🟡 Yellow border = partially right, needs more
+- **Hint card** (middle): a compact visual card (no long text) showing the rule name, a short formula, and a one-line explanation
+- **Progress flowchart** (bottom): same green/red/yellow nodes from the prototype, updated after each spoken step
+
+### 🎙️ Voice I/O — Gemini Live API
+- Mic button streams audio in real time to the backend via WebSocket
+- Backend sends to **Gemini Live API** (multimodal: audio + image)
+- Gemini Live returns:
+  - A **transcript** of what you said (used internally to render math, never shown as text)
+  - The **AI audio response** (spoken back to user via the browser's audio API)
+  - A **structured JSON payload** describing: the step label, status (correct/error/hint/missed), the rendered LaTeX, and any annotation update for the image
+- The AI has a persona called **"Cogito"** — concise, encouraging, Socratic. It never reads equations aloud — it uses "notice that..." or "try thinking about..." language.
+
+### 🔧 Backend — Python (FastAPI + Google GenAI SDK)
+- **WebSocket endpoint** `/ws/session` — receives audio stream chunks + image payload from browser; relays to Gemini Live API
+- **Session state** — maintains conversation history, step sequence, and annotation state per session
+- **Image understanding** — on upload, calls Gemini Vision to extract problem structure and return initial annotation JSON
+- **Math extraction** — uses Gemini's transcript to extract mathematical expressions and convert them to LaTeX (via a structured output prompt)
+- **Audio output relay** — streams Gemini Live audio chunks back to browser for playback
+
+### ☁️ Google Cloud Services
+- **Cloud Run** — hosts the FastAPI backend (Python container)
+- **Secret Manager** — stores Gemini API key
+- **Cloud Storage** — stores uploaded problem images per session
+
+---
+
+## Architecture
+
+```
+Browser (HTML/JS)
+  │
+  ├─ Image upload  ──────────────────────────────► Cloud Storage
+  │
+  └─ WebSocket (audio stream + session ID)
+         │
+         ▼
+   Cloud Run (FastAPI)
+         │
+         ├─ Gemini Live API  ◄──── (audio in, audio out + JSON structured output)
+         │        │
+         │        └─ Annotation updates → sent to browser via WS
+         │
+         └─ Gemini Vision API  ◄── (image analysis on upload)
+                  │
+                  └─ Initial annotation JSON → sent to browser
+```
+
+---
+
+## Revised UI Layout
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  🧠 Cogito  [AI Companion]                  🔴 Gemini Live · 02:14 │
+├─────────────────────────────┬────────────────────────────────────┤
+│                             │  WORKSPACE                         │
+│  PROBLEM                   │                                     │
+│                             │  ┌─────────────────────────────┐   │
+│  [Annotated screenshot]     │  │  Current Step (LaTeX)  🟢   │   │
+│                             │  └─────────────────────────────┘   │
+│  🔵 Definition: u = x      │                                     │
+│  🟠 Constraint: indef. int │  ┌── 💡 Hint ─────────────────┐   │
+│  🟣 → step 2               │  │  LIATE rule: choose u as   │   │
+│                             │  │  the polynomial term first  │   │
+│                             │  └────────────────────────────┘   │
+│                             │                                     │
+│                             │  ── Progress ──────────────────    │
+│                             │  ✓ Identify rule                   │
+│                             │  ✗ Choose u & dv (corrected)       │
+│                             │  ✓ Apply formula                   │
+├─────────────────────────────┴────────────────────────────────────┤
+│  [🎤 mic button]  ══════════ waveform ══════════  [🔊 audio vol] │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Files to Create / Modify
+
+### Backend (new)
+- `server/main.py` — FastAPI app with WebSocket + REST endpoints
+- `server/gemini_live.py` — Gemini Live API client (audio relay, structured output)
+- `server/session.py` — session state management
+- `server/requirements.txt`
+- `server/Dockerfile`
+
+### Frontend (redesigned)
+- [index.html](file:///Users/angela/Downloads/Antigravity/index.html) — new 2-panel layout (no chat area)
+- [style.css](file:///Users/angela/Downloads/Antigravity/style.css) — annotation overlay styles, workspace styles, equation diff highlighting
+- [app.js](file:///Users/angela/Downloads/Antigravity/app.js) — WebSocket client, audio capture/playback, annotation renderer, LaTeX updater
+
+---
+
+## Verification Plan
+1. Run backend locally with `uvicorn`; connect frontend to `ws://localhost:8000/ws/session`
+2. Upload a problem image → confirm annotation JSON returned and overlaid
+3. Click mic → speak a math step → confirm LaTeX renders in workspace
+4. Confirm AI speech plays back through browser speakers
+5. Confirm flowchart node is added after each turn
+6. Deploy to Cloud Run with `gcloud run deploy`

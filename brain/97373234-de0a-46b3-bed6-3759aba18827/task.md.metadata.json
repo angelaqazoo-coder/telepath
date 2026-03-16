@@ -1,0 +1,6 @@
+{
+  "artifactType": "ARTIFACT_TYPE_TASK",
+  "summary": "Full task checklist for Cogito hackathon improvements. Covers barge-in, image generation, README + architecture diagram, Cloud Run deployment, and demo recording.",
+  "updatedAt": "2026-03-16T20:15:57.264295Z",
+  "version": "3"
+}

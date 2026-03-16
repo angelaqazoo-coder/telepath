@@ -1,0 +1,7 @@
+# Cogito Server Testing Plan
+- [ ] Open http://localhost:8000/ and hard refresh
+- [ ] Wait 3 seconds
+- [ ] Take screenshot and save to specified path
+- [ ] Check console for errors and WS state
+- [ ] Verify status pill (Cogito · Live)
+- [ ] Report findings

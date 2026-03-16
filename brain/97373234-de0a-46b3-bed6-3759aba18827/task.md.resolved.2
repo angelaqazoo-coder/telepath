@@ -1,0 +1,26 @@
+# AI Cognitive Companion — Full Build
+
+## Planning
+- [x] Evaluate features, MVP scope
+- [x] Implementation plan (v1 prototype)
+- [x] Backend + UI redesign plan (v2)
+
+## Backend
+- [/] server/requirements.txt
+- [ ] server/__init__.py
+- [ ] server/main.py (FastAPI, WebSocket, static serving)
+- [ ] Dockerfile
+- [ ] .env.example
+
+## Frontend (Redesign — no text chat)
+- [ ] audio-processor.js (AudioWorklet PCM16)
+- [ ] index.html (2-panel: problem viewer + workspace)
+- [ ] style.css (annotation overlay, workspace, mic UI)
+- [ ] app.js (WebSocket client, audio I/O, KaTeX, SVG flowchart)
+
+## Verification
+- [ ] Run server locally, confirm WebSocket connects
+- [ ] Upload image → confirm annotations overlay
+- [ ] Speak → confirm Gemini audio response plays
+- [ ] Confirm workspace LaTeX + flowchart update
+- [ ] Create walkthrough

@@ -1,0 +1,20 @@
+# AI Cognitive Companion — MVP UI Prototype
+
+## Planning
+- [x] Evaluate features and determine MVP scope
+- [x] Create implementation plan
+
+## Execution
+- [ ] Set up project structure (HTML/CSS/JS)
+- [ ] Build main layout: split-pane (problem view + AI companion panel)
+- [ ] Problem upload panel (screenshot drag-and-drop / paste)
+- [ ] Voice input UI (mic button, waveform animation, transcript display)
+- [ ] AI response panel (streaming text, math rendering)
+- [ ] Progress flowchart visualization (green/red/yellow nodes)
+- [ ] Hint/fallacy callout component
+- [ ] Polish: animations, typography, color system
+
+## Verification
+- [ ] Open in browser and validate layout
+- [ ] Check responsiveness and interactions
+- [ ] Create walkthrough

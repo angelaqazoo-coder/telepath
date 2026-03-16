@@ -1,0 +1,49 @@
+# Cogito + Telepath: Next-Gen Multimodal AI Suite
+
+This suite demonstrates the power of the Gemini Live API, combining AI-driven education (Cogito) with real-time meeting intelligence (Telepath).
+
+## Hackathon Features to Implement
+
+### 1. 🎨 Image Generation (Requirement: "Creative power of image generation")
+- **Feature**: Add a "Visualise Concept" button to Cogito's workspace.
+- **Backend**: New `/api/generate_diagram` endpoint using `models/gemini-2.0-flash-exp` (or similar) with `response_mime_type: "image/png"`.
+- **UI**: Display the generated diagram in a modal or sidecard to help students understand tricky math concepts visually.
+
+### 2. 🎤 Barge-in (Requirement: "Handle interruptions naturally")
+- **Backend**: Detect `server_content.interrupted` in both `ws_session` (Cogito) and `handle_telepath_ws` (Telepath).
+- **Frontend**: On `interrupted`, stop all currently playing audio chunks and clear the playback queue.
+
+### 3. 🔗 Suite Integration
+- Add a navigation toggle to switch between **AI Tutor (Cogito)** and **Meeting Intelligence (Telepath)**.
+- Ensure consistent styling and "Live" status indicators.
+
+## Proposed Changes
+
+### [Component] Cogito (AI Tutor)
+
+#### [MODIFY] [server/main.py](file:///Users/angela/Downloads/Antigravity/server/main.py)
+- Add `/api/generate_diagram` endpoint.
+- Implement `interrupted` signal relay in `ws_session`.
+
+#### [MODIFY] [app.js](file:///Users/angela/Downloads/Antigravity/app.js)
+- Clear audio queue on `interrupted`.
+- Add "Visualise" button logic and diagram display.
+
+### [Component] Telepath (Meeting Intelligence)
+
+#### [MODIFY] [server/telepath.py](file:///Users/angela/Downloads/Antigravity/server/telepath.py)
+- Refactor `handle_telepath_ws` to use `asyncio.wait(..., return_when=asyncio.FIRST_COMPLETED)` for robust disconnection handling.
+- Relay `interrupted` signal.
+
+#### [MODIFY] [telepath.js](file:///Users/angela/Downloads/Antigravity/telepath.js)
+- Clear audio queue on `interrupted`.
+
+## Verification Plan
+
+### Automated/Manual Tests
+1. **Barge-in test**: Start Cogito speaking, then interrupt. Confirm audio stops immediately.
+2. **Image Gen test**: Click "Visualise". Confirm a relevant diagram appears.
+3. **Telepath Robustness**: Force-close browser tab. Verify server log shows "Session disconnected cleanly".
+
+### Deployment
+- Run `gcloud run deploy` and provide the public URL.

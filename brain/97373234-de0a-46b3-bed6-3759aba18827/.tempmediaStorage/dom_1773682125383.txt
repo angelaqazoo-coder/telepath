@@ -1,0 +1,65 @@
+<current_dom_explanation>
+This is a temporary snapshot of the current page's DOM structure. The DOM will change if you navigate to or interact with another page. Use a tool like browser_get_dom to capture and preserve the DOM in your trajectory if needed for later reference.
+</current_dom_explanation>
+<current_dom>
+🧠
+Cogito
+AI Companion
+Gemini Live · Ready
+|
+01:39
+📷
+Problem
+[0] (114,323)<div aria-label='Upload or paste a problem screenshot' id='drop-zone' role='button'>Drop screenshot here
+or paste (⌘V) · click to browse />
+	[1] (114,283)<span >🖼️ />
+	Drop screenshot here
+	or paste (⌘V) · click to browse
+Topic
+Calculus
+Integration
+Differential Eq.
+Difficulty
+3
+Steps taken
+1
+Hints used
+1
+Errors caught
+67%
+Accuracy
+💬
+Think Aloud
+[2] (754,122)<button aria-label='Reset session' id='reset-btn'>Reset />
+[3] (507,497)<div aria-label='Conversation history' id='messages' role='log' scrollable='true' />
+	Good call. Integration by parts uses the formula $\int u\,dv = uv - \int v\,du$
+	Let's see how you choose u and dv.
+	You
+	🧑
+	I'll let u = eˣ and dv = x dx … so du = eˣ dx and v = x²/2.
+	✦
+	Cogito
+	Careful here — your choice will work mathematically, but it leads to a harder integral.
+	Usually we pick u as the polynomial (easier to differentiate down to 0). Try u = x, dv = eˣ dx.
+	💡
+	Hint
+	The LIATE rule suggests choosing u as the Logarithmic/Inverse/Algebraic/Trig/Exponential type that appears first.
+	You
+	🧑
+	Oh right, okay. So u = x, du = dx, dv = eˣ dx, v = eˣ.
+	✦
+	Cogito
+	Exactly right. Now apply the formula:
+	$\int x\,e^x\,dx = x\cdot e^x - \int e^x\,dx$
+Press
+Space
+to send next phrase · or click 🎤 to toggle recording
+[4] (264,937)<button aria-label='Toggle microphone recording' class='recording' id='mic-btn'>🎤 />
+[5] (749,937)<button aria-label='Submit current input' id='send-btn'>➤ />
+🗺️
+Your Path
+Correct
+Error
+Missed
+
+</current_dom>

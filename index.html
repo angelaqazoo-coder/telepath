@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telepath — AI Meeting Intelligence</title>
+  <meta name="description" content="AI that understands the emotional and cognitive state of your meetings." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="telepath.css" />
+</head>
+<body>
+
+<div id="app">
+  <header id="topbar">
+    <div class="logo">
+      <div class="logo-icon">👁️‍🗨️</div>
+      <span class="logo-name">Telepath</span>
+      <span class="logo-badge">Live Analysis</span>
+    </div>
+    <div id="connection-status" class="status-pill status-offline">
+      <span class="status-dot"></span>
+      <span class="status-label">Offline</span>
+    </div>
+    <div id="session-clock">00:00</div>
+  </header>
+
+  <main id="main-content">
+    <!-- Left: Live Video Feed -->
+    <section id="panel-video">
+      <div class="panel-header">
+        <span class="panel-label">📹 Live Feed</span>
+      </div>
+      <div id="video-container">
+        <video id="webcam" autoplay playsinline muted></video>
+        <canvas id="frame-canvas" class="hidden"></canvas>
+        <div id="video-overlay">
+          <div class="recording-dot"></div>
+          <span class="recording-text">Streaming to Gemini</span>
+        </div>
+      </div>
+      <div id="participant-list">
+        <!-- AI detected participants here -->
+      </div>
+    </section>
+
+    <!-- Right: Insights Dashboard -->
+    <section id="panel-insights">
+      <div class="panel-header">
+        <span class="panel-label">📊 Meeting Insights</span>
+      </section>
+
+      <div id="dashboard-body">
+        <!-- Metric Cards -->
+        <div class="metrics-grid">
+          <div class="metric-card" id="metric-understanding">
+            <div class="metric-header">
+              <span class="metric-icon">🧠</span>
+              <span class="metric-title">Understanding</span>
+            </div>
+            <div class="metric-value">62%</div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" style="width: 62%;"></div>
+            </div>
+          </div>
+
+          <div class="metric-card" id="metric-engagement">
+            <div class="metric-header">
+              <span class="metric-icon">🔥</span>
+              <span class="metric-title">Engagement</span>
+            </div>
+            <div class="metric-value">85%</div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Dynamics / Alerts -->
+        <div id="alerts-section">
+          <div class="section-label">Real-time Alerts</div>
+          <div id="alerts-container">
+            <div class="alert-toast hidden" id="alert-confusion">
+              <span class="alert-icon">❓</span>
+              <span class="alert-text">Confusion spike detected</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Observations -->
+        <div id="observations-section">
+          <div class="section-label">AI Observations</div>
+          <div id="observations-list">
+            <div class="observation-item">
+              “Three participants appear confused about the budget discussion.”
+            </div>
+            <div class="observation-item important">
+              “Sarah has tried to speak three times but was interrupted.”
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="controls-bar">
+    <div id="mic-region">
+      <button id="start-btn">Start Telepath Session</button>
+      <button id="mic-btn" class="hidden">🎤</button>
+      <div id="waveform-display">
+        <span id="wave-idle-label">Waiting for start…</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script src="telepath.js"></script>
+</body>
+</html>
