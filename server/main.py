@@ -30,7 +30,7 @@ SERVER_DIR = pathlib.Path(__file__).parent
 
 # ── Config ────────────────────────────────────────────────────────────────────
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-LIVE_MODEL     = "models/gemini-2.0-flash"
+LIVE_MODEL     = "models/gemini-2.0-flash-exp"
 
 # ── System Prompt ─────────────────────────────────────────────────────────────
 TELEPATH_PROMPT = """You are Telepath, an advanced AI designed to understand the emotional and cognitive state of a meeting.
@@ -144,6 +144,8 @@ async def ws_session(websocket: WebSocket, session_id: str):
                                     media_chunks=[types.Blob(data=img_bytes, mime_type="image/jpeg")]
                                 )
                             )
+                        elif data.get("type") == "end_turn":
+                            await gemini.send(end_of_turn=True)
 
             async def gemini_to_browser():
                 async for response in gemini.receive():
